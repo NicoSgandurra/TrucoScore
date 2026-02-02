@@ -1,0 +1,137 @@
+/* Basic resets and utilities */
+html,
+body {
+    overscroll-behavior: none;
+    /* Prevent pull-to-refresh on mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Match container structure - Removed unused */
+
+
+/* Animations */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pop-anim {
+    animation: pop 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-bounce-in {
+    animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Modals */
+.mode-btn.active {
+    background-color: #334155;
+    /* Slate 800 */
+    color: white;
+}
+
+/* Dot Group: Dice-5 / Quincunx Layout (Additive logic) 
+   We use a 3x3 grid to place dots:
+   1 2 3
+   4 5 6
+   7 8 9
+   
+   Fill Order:
+   1: Top-Right (3) or Top-Left(1)? Usually Top-Right in playing cards, but let's go linear corners.
+   1: Top-Left (1)
+   2: + Top-Right (3)
+   3: + Bottom-Left (7)
+   4: + Bottom-Right (9) - Square
+   5: + Center (5) - Full
+*/
+.dot-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 32px;
+    height: 32px;
+    gap: 0;
+    /* Minimal gap */
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin: auto;
+    /* Center in grid cell */
+    background-color: transparent;
+    /* Invisible by default */
+    border: 1px solid rgba(51, 65, 85, 0.1);
+    /* Subtle placeholder outline? */
+    transition: background-color 0.2s ease, transform 0.2s;
+}
+
+/* Hide placeholder border if desired, but helps see the structure. User said "minimalist". 
+   Let's keep it clean: no border initially, just appear.
+*/
+.dot {
+    border: none;
+}
+
+/* Positions */
+.dot:nth-child(1) {
+    grid-area: 1 / 1;
+}
+
+/* Top-Left */
+.dot:nth-child(2) {
+    grid-area: 1 / 3;
+}
+
+/* Top-Right */
+.dot:nth-child(3) {
+    grid-area: 3 / 1;
+}
+
+/* Bottom-Left */
+.dot:nth-child(4) {
+    grid-area: 3 / 3;
+}
+
+/* Bottom-Right */
+.dot:nth-child(5) {
+    grid-area: 2 / 2;
+}
+
+/* Center */
+
+.dot.active {
+    background-color: #334155;
+    /* Slate 700 */
+    transform: scale(1.2);
+}
