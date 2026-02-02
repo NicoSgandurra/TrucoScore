@@ -1,0 +1,21 @@
+{
+  "name": "Truco Score",
+  "short_name": "Truco",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F8F9FA",
+  "theme_color": "#B4D6E6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
