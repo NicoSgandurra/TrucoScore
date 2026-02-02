@@ -181,56 +181,84 @@ function startGame(limit) {
 
 function setupInteraction(element, team) {
     let preventClick = false;
-    let pressTimer;
-    let repeatInterval;
+    let pressTimer = null;
+    let repeatInterval = null;
     const LONG_PRESS_DURATION = 600;
-    const REPEAT_INTERVAL_DURATION = 400;
+    const REPEAT_INTERVAL_DURATION = 300; // Slower repeat as requested
 
-    element.addEventListener('click', (e) => {
-        if (elements[team].name.contains(e.target)) return;
-        if (!state.gameStarted || preventClick) {
-            preventClick = false;
-            return;
+    const cancelPress = () => {
+        if (pressTimer) {
+            clearTimeout(pressTimer);
+            pressTimer = null;
         }
-        updateScore(team, state[team] + 1);
-        if (navigator.vibrate) navigator.vibrate(50);
-        playClickSound('add');
-    });
-
-    element.addEventListener('contextmenu', (e) => {
-        if (elements[team].name.contains(e.target)) return;
-        e.preventDefault();
-        if (!state.gameStarted) return;
-        subtract();
-    });
+        if (repeatInterval) {
+            clearInterval(repeatInterval);
+            repeatInterval = null;
+        }
+    };
 
     const subtract = () => {
         updateScore(team, state[team] - 1);
-        if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+        if (navigator.vibrate) navigator.vibrate([50]);
         playClickSound('sub');
     };
 
     const startPress = (e) => {
         if (elements[team].name.contains(e.target)) return;
+        // Basic check: if game not started, do nothing
         if (!state.gameStarted) return;
 
+        // If we already have a timer, ignore (e.g. touchstart then mousedown)
+        if (pressTimer || repeatInterval) return;
+
         pressTimer = setTimeout(() => {
-            preventClick = true;
-            subtract();
+            preventClick = true; // Block the subsequent 'click' event
+            subtract(); // Initial decrement on hold
             repeatInterval = setInterval(subtract, REPEAT_INTERVAL_DURATION);
         }, LONG_PRESS_DURATION);
     };
 
-    const cancelPress = () => {
-        clearTimeout(pressTimer);
-        clearInterval(repeatInterval);
-    };
-
-    element.addEventListener('mousedown', startPress);
+    // TOUCH & MOUSE DOWN -> Start Timer
     element.addEventListener('touchstart', startPress, { passive: true });
+    element.addEventListener('mousedown', startPress);
+
+    // CANCEL EVENTS -> Stop Timer
+    element.addEventListener('touchend', cancelPress);
     element.addEventListener('mouseup', cancelPress);
     element.addEventListener('mouseleave', cancelPress);
-    element.addEventListener('touchend', cancelPress);
+
+    // CLICK -> Add point (unless prevented by long press)
+    element.addEventListener('click', (e) => {
+        if (elements[team].name.contains(e.target)) return;
+        if (!state.gameStarted) return;
+
+        if (preventClick) {
+            preventClick = false;
+            return;
+        }
+
+        updateScore(team, state[team] + 1);
+        if (navigator.vibrate) navigator.vibrate(50);
+        playClickSound('add');
+    });
+
+    // CONTEXT MENU -> Subtract point (Right Click)
+    element.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        if (elements[team].name.contains(e.target)) return;
+        if (!state.gameStarted) return;
+
+        // If 'preventClick' is true, it means the long-press loop already triggered.
+        // We just prevent the menu and exit.
+        if (preventClick) return;
+
+        // If pressTimer is set but preventClick is FALSE, it means we are in the "pending" state
+        // (User held long enough for browser context menu, but maybe slightly under our 600ms or racing).
+        // In this case, we cancel our pending timer and just do ONE subtract for the right-click action.
+        cancelPress();
+
+        subtract();
+    });
 }
 
 function setupNameEditing(team) {
