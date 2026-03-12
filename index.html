@@ -3,165 +3,935 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Contador de Truco | Anotador Online Gratis</title>
-    <meta name="description"
-        content="Contador de puntos para Truco Argentino. Anotador simple, moderno y minimalista. Sin publicidad, modo oscuro y función de deshacer. ¡Úsalo online o instálalo!">
-    <meta name="keywords"
-        content="truco, contador, anotador, puntos, partido, cartas, argentina, online, app, pwa, gratis">
-    <meta name="author" content="Truco Score">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://trucoscore.app/">
-    <meta property="og:title" content="Contador de Truco | Anotador Online">
-    <meta property="og:description" content="Anotador de puntos para Truco. Simple, moderno y gratis.">
-    <meta property="og:image" content="icon.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary">
-    <meta property="twitter:title" content="Contador de Truco | Anotador Online">
-    <meta property="twitter:description" content="Anotador de puntos para Truco. Simple, moderno y gratis.">
-    <meta property="twitter:image" content="icon.png">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Truco Anotador Pro</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#B4D6E6">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="icon" type="image/png" href="icon.png">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'pastel-bg': '#F8F9FA',
-                        'pastel-blue': '#B4D6E6', // Soft pastel blue
-                        'pastel-pink': '#FFC4D6', // Soft pastel pink
-                        'text-dark': '#333333',
-                    },
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    }
-                }
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- PWA Manifest & App Info injected dynamically via JS below -->
+    <link rel="manifest" id="manifest-link">
+    <meta name="theme-color" content="#FAFAFA" id="meta-theme-color">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        :root {
+            /* Light Glassmorphism */
+            --bg-color: #F4F6F8;
+            --text-main: #1A202C;
+            --text-muted: #A0AEC0;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --t1-color: #FF9A9E;
+            /* Pink Gradient Start */
+            --t1-text: #F87171;
+            --t1-shadow: rgba(255, 154, 158, 0.25);
+            --t2-color: #A1C4FD;
+            /* Blue Gradient Start */
+            --t2-text: #60A5FA;
+            --t2-shadow: rgba(161, 196, 253, 0.25);
+            --border-color: #E2E8F0;
+            --overlay-bg: rgba(255, 255, 255, 0.75);
+            --app-bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        .oled-mode {
+            /* True OLED Black */
+            --bg-color: #000000;
+            --text-main: #F7FAFC;
+            --text-muted: #4A5568;
+            --card-bg: #000000;
+            /* Negro absoluto */
+            --card-border: #1A1A1A;
+            /* Borde muy sutil para diferenciar */
+            --t1-color: #FC8181;
+            --t1-text: #FEB2B2;
+            --t1-shadow: rgba(252, 129, 129, 0.15);
+            --t2-color: #63B3ED;
+            --t2-text: #90CDF4;
+            --t2-shadow: rgba(99, 179, 237, 0.15);
+            --border-color: #1A1A1A;
+            --overlay-bg: rgba(0, 0, 0, 0.95);
+            --app-bg-gradient: none;
+            /* Elimina degradados */
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--app-bg-gradient);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background 0.6s ease, color 0.6s ease;
+            -webkit-tap-highlight-color: transparent;
+            overscroll-behavior-y: none;
+        }
+
+        /* Glassmorphism Cards */
+        .team-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 2.5rem;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, background 0.6s ease;
+            user-select: none;
+            touch-action: pan-y;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team1-card {
+            box-shadow: 0 20px 50px -10px var(--t1-shadow);
+        }
+
+        .team2-card {
+            box-shadow: 0 20px 50px -10px var(--t2-shadow);
+        }
+
+        /* Oled overrides to remove glass blur */
+        .oled-mode .team-card {
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .team1-text {
+            color: var(--t1-text);
+        }
+
+        .team2-text {
+            color: var(--t2-text);
+        }
+
+        /* Input Styles */
+        .team-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-weight: 900;
+            width: 90%;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+            cursor: text;
+        }
+
+        .team-input:focus {
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        /* SVG Drawings & Animations */
+        .truco-svg {
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s ease;
+        }
+
+        .truco-line.animate-draw {
+            stroke-dasharray: 150;
+            stroke-dashoffset: 150;
+            animation: drawPath 0.3s ease-out forwards;
+        }
+
+        @keyframes drawPath {
+            0% {
+                stroke-dashoffset: 150;
+                opacity: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 1;
             }
         }
 
-        // PWA Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js');
-            });
+        .oled-mode .team1-svg {
+            stroke: var(--t1-color);
+            filter: drop-shadow(0 0 6px var(--t1-shadow));
         }
-    </script>
+
+        .oled-mode .team2-svg {
+            stroke: var(--t2-color);
+            filter: drop-shadow(0 0 6px var(--t2-shadow));
+        }
+
+        .team1-svg {
+            stroke: var(--t1-text);
+        }
+
+        .team2-svg {
+            stroke: var(--t2-text);
+        }
+
+        /* Empty dots container */
+        .empty-box {
+            position: relative;
+        }
+
+        .empty-box::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background-color: var(--text-muted);
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            background-color: var(--overlay-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: opacity 0.3s ease;
+        }
+
+        .oled-mode .modal-overlay {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .oled-mode .modal-content {
+            box-shadow: none;
+        }
+
+        /* Scrollbars */
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 10px;
+        }
+
+        /* Icons */
+        .icon-btn {
+            color: var(--text-muted);
+            transition: color 0.2s, transform 0.2s, background-color 0.2s;
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-main);
+            transform: scale(1.08);
+            background-color: var(--border-color);
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        /* Pills */
+        .info-pill {
+            background: rgba(160, 174, 192, 0.08);
+            border: 1px solid rgba(160, 174, 192, 0.15);
+            backdrop-filter: blur(4px);
+        }
+
+        .oled-mode .info-pill {
+            background: transparent;
+            border-color: var(--border-color);
+        }
+    </style>
 </head>
 
-<body class="bg-pastel-bg h-screen w-full overflow-hidden flex flex-col md:flex-row select-none">
+<body class="min-h-[100dvh] flex flex-col items-center justify-center p-3 sm:p-6" oncontextmenu="return false;">
 
-    <!-- Nosotros Section (Left/Top) -->
-    <div id="nosotros-area"
-        class="h-1/2 md:h-full md:w-1/2 bg-pastel-blue flex flex-col justify-center items-center cursor-pointer transition-colors hover:bg-opacity-90 active:scale-[0.98] transform duration-100 touch-none relative overflow-hidden">
+    <div class="max-w-md w-full flex flex-col flex-1 gap-4 sm:gap-5 relative py-2 sm:py-0 justify-between">
 
-        <!-- Header Wrapper (Name Only) -->
-        <div class="absolute top-6 left-6 flex flex-col items-start z-20 pointer-events-auto">
-            <div id="name-nosotros"
-                class="text-xl md:text-2xl font-bold uppercase tracking-widest text-slate-700/60 p-2 -ml-2 rounded hover:bg-black/5 transition-colors focus:bg-white/80 focus:text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400">
-                Nosotros</div>
-        </div>
-
-        <div class="flex flex-col items-center z-10 pointer-events-none">
-            <div id="nosotros-status"
-                class="text-xs md:text-sm font-bold uppercase tracking-wide text-slate-700/40 mb-2 h-4 hidden">Malas
+        <!-- Header Controls -->
+        <header class="flex justify-between items-center px-2">
+            <div>
+                <h1 class="text-3xl font-black tracking-tighter">Truco</h1>
+                <p class="text-[10px] text-muted font-bold tracking-widest uppercase ml-1">Anotador Pro</p>
             </div>
-            <div id="score-nosotros"
-                class="text-[8rem] md:text-[12rem] font-bold leading-none text-slate-800 tabular-nums transition-transform duration-100 will-change-transform">
-                0</div>
-            <div id="dots-nosotros" class="flex flex-wrap justify-center gap-4 mt-8 min-h-[4rem] px-4">
-                <!-- Dots will be injected here -->
+
+            <div
+                class="flex items-center gap-1 sm:gap-2 bg-[var(--card-bg)] px-2 sm:px-3 py-1.5 sm:py-2 rounded-full border border-[var(--card-border)] shadow-sm backdrop-blur-md">
+
+                <button onclick="installApp()" id="installBtn" class="icon-btn hidden text-[var(--t2-text)]"
+                    aria-label="Instalar App">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                </button>
+
+                <button onclick="openModal('rulesModal')" class="icon-btn" aria-label="Reglas del Truco">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                    </svg>
+                </button>
+
+                <button onclick="openModal('historyModal')" class="icon-btn" aria-label="Historial">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+
+                <button onclick="toggleSound()" id="soundBtn" class="icon-btn text-[var(--text-main)]"
+                    aria-label="Sonido">
+                    <svg id="soundIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10H3a2 2 0 00-2 2v4a2 2 0 002 2h2l5 5V5l-5 5z">
+                        </path>
+                    </svg>
+                </button>
+
+                <button onclick="toggleTheme()" class="icon-btn" aria-label="Tema OLED">
+                    <svg id="themeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                        </path>
+                    </svg>
+                </button>
             </div>
+        </header>
+
+        <!-- Main Board -->
+        <main class="flex-1 grid grid-cols-2 gap-3 sm:gap-4 my-2">
+
+            <!-- Team 1 -->
+            <div class="team-card team1-card h-full p-4 sm:p-6 justify-between flex-1"
+                onpointerdown="handlePointerDown(event, 1)" onpointerup="handlePointerUp(event, 1)"
+                onpointerleave="handlePointerCancel(event)" onpointercancel="handlePointerCancel(event)">
+
+                <div class="w-full text-center mt-2">
+                    <input type="text" id="name1" value="Nosotros"
+                        class="team-input text-2xl team1-text mb-2 relative z-10" onclick="event.stopPropagation()"
+                        oninput="saveGameState()">
+                    <div class="text-[5rem] sm:text-7xl font-black team1-text mb-2 tracking-tighter leading-none"
+                        id="score1Num">0</div>
+                </div>
+
+                <!-- Ajustado a disposición VERTICAL con flex-col -->
+                <div id="boxes1"
+                    class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 w-full pointer-events-none flex-1 min-h-[150px]">
+                </div>
+
+                <div class="info-pill rounded-2xl px-3 py-2 mt-2 mb-1 pointer-events-none w-[90%] sm:w-auto">
+                    <p
+                        class="text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-relaxed mx-auto w-fit">
+                        &bull; Toque +1
+                        <br>
+                        &bull; Mantener -1
+                    </p>
+                </div>
+            </div>
+
+            <!-- Team 2 -->
+            <div class="team-card team2-card h-full p-4 sm:p-6 justify-between flex-1"
+                onpointerdown="handlePointerDown(event, 2)" onpointerup="handlePointerUp(event, 2)"
+                onpointerleave="handlePointerCancel(event)" onpointercancel="handlePointerCancel(event)">
+
+                <div class="w-full text-center mt-2">
+                    <input type="text" id="name2" value="Ellos"
+                        class="team-input text-2xl team2-text mb-2 relative z-10" onclick="event.stopPropagation()"
+                        oninput="saveGameState()">
+                    <div class="text-[5rem] sm:text-7xl font-black team2-text mb-2 tracking-tighter leading-none"
+                        id="score2Num">0</div>
+                </div>
+
+                <!-- Ajustado a disposición VERTICAL con flex-col -->
+                <div id="boxes2"
+                    class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 w-full pointer-events-none flex-1 min-h-[150px]">
+                </div>
+
+                <div class="info-pill rounded-2xl px-3 py-2 mt-2 mb-1 pointer-events-none w-[90%] sm:w-auto">
+                    <p
+                        class="text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-relaxed mx-auto w-fit">
+                        &bull; Toque +1
+                        <br>
+                        &bull; Mantener -1
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer Settings -->
+        <div class="flex justify-between items-center gap-3 mt-1">
+            <select id="maxPoints" onchange="changeMaxPoints()"
+                class="bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-main)] rounded-2xl px-4 sm:px-5 py-4 font-bold focus:outline-none appearance-none cursor-pointer flex-1 text-center shadow-sm backdrop-blur-md text-sm sm:text-base">
+                <option value="30">Jugar a 30 Puntos</option>
+                <option value="15">Jugar a 15 Puntos</option>
+            </select>
+
+            <button id="resetBtn" onclick="confirmReset()"
+                class="bg-transparent border border-[var(--border-color)] text-[var(--text-main)] font-bold rounded-2xl px-4 sm:px-5 py-4 opacity-70 hover:opacity-100 transition-all shadow-sm backdrop-blur-md hover:bg-[var(--border-color)] text-sm sm:text-base">
+                Reiniciar
+            </button>
         </div>
     </div>
 
-    <!-- Ellos Section (Right/Bottom) -->
-    <div id="ellos-area"
-        class="h-1/2 md:h-full md:w-1/2 bg-pastel-pink flex flex-col justify-center items-center cursor-pointer transition-colors hover:bg-opacity-90 active:scale-[0.98] transform duration-100 touch-none relative overflow-hidden">
+    <!-- Modals -->
 
-        <!-- Header Wrapper (Name Only) -->
-        <div
-            class="absolute top-6 left-6 md:left-auto md:right-6 flex flex-col items-start md:items-end z-20 pointer-events-auto">
-            <div id="name-ellos"
-                class="text-xl md:text-2xl font-bold uppercase tracking-widest text-slate-700/60 p-2 -ml-2 md:-mr-2 md:ml-0 rounded hover:bg-black/5 transition-colors focus:bg-white/80 focus:text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400">
-                Ellos</div>
-        </div>
-
-        <div class="flex flex-col items-center z-10 pointer-events-none">
-            <div id="ellos-status"
-                class="text-xs md:text-sm font-bold uppercase tracking-wide text-slate-700/40 mb-2 h-4 hidden">Malas
-            </div>
-            <div id="score-ellos"
-                class="text-[8rem] md:text-[12rem] font-bold leading-none text-slate-800 tabular-nums transition-transform duration-100 will-change-transform">
-                0</div>
-            <div id="dots-ellos" class="flex flex-wrap justify-center gap-4 mt-8 min-h-[4rem] px-4">
-                <!-- Dots will be injected here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Controls Overlay (Reset via Modal/Button) -->
-    <div class="absolute bottom-6 md:bottom-8 w-full flex justify-center pointer-events-none z-20">
-        <button id="reset-btn"
-            class="bg-white/80 backdrop-blur-sm shadow-lg text-slate-600 px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide hover:bg-white pointer-events-auto active:scale-95 transition-all">
-            Reiniciar
-        </button>
-    </div>
-
-    <!-- Startup / Game Mode Modal -->
-    <div id="setup-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-6 max-w-sm w-full mx-4">
-            <h2 class="text-2xl font-bold text-slate-800">Copa Truco</h2>
-            <p class="text-slate-500">¿A cuántos puntos?</p>
-            <div class="flex gap-4 w-full">
-                <button data-limit="15"
-                    class="mode-btn flex-1 py-4 bg-slate-100 rounded-xl font-bold text-xl text-slate-700 hover:bg-slate-200 transition-colors">15</button>
-                <button data-limit="30"
-                    class="mode-btn flex-1 py-4 bg-slate-100 rounded-xl font-bold text-xl text-slate-700 hover:bg-slate-200 transition-colors">30</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Winner Overlay -->
-    <div id="winner-modal"
-        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-md hidden transition-opacity duration-300 opacity-0 pointer-events-none">
-        <div class="bg-white p-10 rounded-3xl shadow-2xl flex flex-col items-center gap-4 animate-bounce-in">
-            <div id="winner-text" class="text-4xl font-bold text-slate-800 mb-2">GANADOR</div>
-            <p id="winner-team" class="text-2xl text-slate-600 uppercase tracking-widest mb-6">Nosotros</p>
-            <button id="new-game-btn"
-                class="bg-slate-800 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-700 transition-colors shadow-lg">
+    <!-- 1. Winner Modal -->
+    <div id="winnerModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0">
+        <div class="modal-content rounded-[2.5rem] p-8 max-w-sm w-[90%] text-center transform scale-90 backdrop-blur-xl"
+            id="winnerContent">
+            <div class="text-6xl mb-4 animate-bounce">👑</div>
+            <h2 class="text-2xl font-black mb-2 tracking-tight">¡Partida Terminada!</h2>
+            <p class="text-lg font-bold mb-8 text-muted" id="winnerText">Ganó el equipo</p>
+            <button onclick="closeModal('winnerModal', 'winnerContent', true)"
+                class="w-full py-4 rounded-2xl bg-[var(--text-main)] text-[var(--bg-color)] font-black text-lg shadow-xl hover:scale-[1.03] transition-transform">
                 Nueva Partida
             </button>
         </div>
     </div>
 
-    <!-- Reset Confirmation Modal -->
-    <div id="reset-modal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200 pointer-events-none">
-        <div
-            class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-6 max-w-sm w-full mx-4 animate-bounce-in">
-            <h2 class="text-2xl font-bold text-slate-800">¿Reiniciar?</h2>
-            <p class="text-slate-500 text-center">Se perderá el progreso actual.</p>
-            <div class="flex gap-4 w-full">
-                <button id="cancel-reset-btn"
-                    class="flex-1 py-3 bg-slate-100 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors">Cancelar</button>
-                <button id="confirm-reset-btn"
-                    class="flex-1 py-3 bg-slate-800 rounded-xl font-bold text-white hover:bg-slate-700 transition-colors shadow-lg">Confirmar</button>
+    <!-- 2. History Modal -->
+    <div id="historyModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0"
+        onclick="closeModal('historyModal', 'historyContent')">
+        <div class="modal-content rounded-[2.5rem] p-6 max-w-sm w-[90%] max-h-[80vh] flex flex-col transform scale-90"
+            id="historyContent" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h2 class="text-xl font-black tracking-tight">Historial</h2>
+                <button onclick="closeModal('historyModal', 'historyContent')"
+                    class="icon-btn bg-[var(--bg-color)]">&times;</button>
+            </div>
+            <div id="historyList" class="flex-1 overflow-y-auto custom-scroll pr-2 flex flex-col gap-3">
+                <!-- History items injected here -->
+            </div>
+            <button id="clearHistoryBtn" onclick="clearHistory()"
+                class="mt-5 text-sm text-[var(--text-muted)] font-bold transition-colors">
+                Borrar Historial
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. Rules Cheat Sheet Modal -->
+    <div id="rulesModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0"
+        onclick="closeModal('rulesModal', 'rulesContent')">
+        <div class="modal-content rounded-[2.5rem] p-6 max-w-sm w-[90%] max-h-[85vh] flex flex-col transform scale-90"
+            id="rulesContent" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h2 class="text-xl font-black tracking-tight flex items-center gap-2">📖 Guía Rápida</h2>
+                <button onclick="closeModal('rulesModal', 'rulesContent')"
+                    class="icon-btn bg-[var(--bg-color)]">&times;</button>
+            </div>
+            <div class="flex-1 overflow-y-auto custom-scroll pr-2 space-y-6 text-sm">
+
+                <div class="bg-[var(--bg-color)] p-4 rounded-3xl border border-[var(--border-color)]">
+                    <h3 class="font-bold text-[var(--t1-text)] mb-3 uppercase tracking-wider text-xs">Jerarquía (Mayor a
+                        Menor)</h3>
+                    <ul
+                        class="space-y-1.5 font-semibold opacity-80 border-l-2 border-[var(--border-color)] pl-3 text-xs">
+                        <li>1 de Espada (Macho)</li>
+                        <li>1 de Basto (Hembra)</li>
+                        <li>7 de Espada</li>
+                        <li>7 de Oro</li>
+                        <li>Los 3</li>
+                        <li>Los 2</li>
+                        <li>Ases falsos (1 Copa/Oro)</li>
+                        <li>Reyes (12), Caballos (11), Sotas (10)</li>
+                        <li>Sietes falsos (7 Copa/Basto)</li>
+                        <li>Los 6, 5, 4 (Peores)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-[var(--bg-color)] p-4 rounded-3xl border border-[var(--border-color)]">
+                    <h3 class="font-bold text-[var(--t2-text)] mb-2 uppercase tracking-wider text-xs">Envido (Puntos)
+                    </h3>
+                    <p class="opacity-70 mb-1 text-xs">Mismo palo: 20 + Valor de cartas.</p>
+                    <p class="opacity-70 mb-3 text-xs">Las figuras (10, 11, 12) valen 0.</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs font-black text-center opacity-80">
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl">Envido: 2</div>
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl">Real: 3</div>
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl col-span-2">Falta: Partido /
+                            Resto</div>
+                    </div>
+                </div>
+
+                <div class="bg-[var(--bg-color)] p-4 rounded-3xl border border-[var(--border-color)]">
+                    <h3 class="font-bold text-[var(--text-main)] mb-3 uppercase tracking-wider text-xs">Cantos</h3>
+                    <div class="grid grid-cols-3 gap-2 text-xs font-black text-center opacity-80">
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl">Truco<br>2</div>
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl">Retruco<br>3</div>
+                        <div class="border border-[var(--border-color)] p-2 rounded-xl">Vale 4<br>4</div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script>
+        // --- 1. SETUP OFFLINE PWA CAPABILITIES ---
+        const svgIconBase64 = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='120' fill='%23FFB6B9'/%3E%3Cpath d='M256,120 C140,240 100,300 150,370 C180,410 230,400 256,340 C282,400 332,410 362,370 C412,300 372,240 256,120 Z' fill='%23FFFFFF'/%3E%3Crect x='236' y='340' width='40' height='90' rx='20' fill='%23FFFFFF'/%3E%3C/svg%3E";
+        const manifest = {
+            "name": "Truco Anotador Pro",
+            "short_name": "Truco Pro",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#FAFAFA",
+            "theme_color": "#FAFAFA",
+            "description": "Anotador minimalista de truco argentino",
+            "icons": [{ "src": svgIconBase64, "sizes": "512x512", "type": "image/svg+xml" }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+        document.getElementById('manifest-link').href = URL.createObjectURL(manifestBlob);
+
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (e) => { e.waitUntil(self.skipWaiting()); });
+                self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
+                self.addEventListener('fetch', (e) => {
+                    e.respondWith(fetch(e.request).catch(() => new Response('App Offline. Please run from cached PWA.')));
+                });
+            `;
+            const swBlob = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => { });
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').classList.remove('hidden');
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('installBtn').classList.add('hidden');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // --- 2. STATE & CORE LOGIC ---
+        let scores = { 1: 0, 2: 0 };
+        let previousScores = { 1: 0, 2: 0 };
+        let maxPoints = 30;
+        let isOled = false;
+
+        let audioCtx;
+        let isSoundEnabled = true;
+
+        let pressTimer;
+        let intervalTimer;
+        let isLongPress = false;
+        const LONG_PRESS_MS = 500;
+        const INTERVAL_MS = 400;
+
+        // --- STATE PERSISTENCE ---
+        function loadGameState() {
+            try {
+                const saved = localStorage.getItem('trucoGameState');
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    scores = state.scores || { 1: 0, 2: 0 };
+                    previousScores = { ...scores };
+                    maxPoints = state.maxPoints || 30;
+                    document.getElementById('maxPoints').value = maxPoints;
+
+                    if (state.name1) document.getElementById('name1').value = state.name1;
+                    if (state.name2) document.getElementById('name2').value = state.name2;
+
+                    if (state.isOled) {
+                        isOled = true;
+                        document.body.classList.add('oled-mode');
+                        document.getElementById('meta-theme-color').setAttribute("content", "#000000");
+                        document.getElementById('themeIcon').innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+                    }
+                }
+            } catch (e) { console.error("Could not load state", e); }
+        }
+
+        function saveGameState() {
+            const state = {
+                scores,
+                maxPoints,
+                name1: document.getElementById('name1').value,
+                name2: document.getElementById('name2').value,
+                isOled
+            };
+            localStorage.setItem('trucoGameState', JSON.stringify(state));
+        }
+
+        // --- 3. AUDIO SYNTHESIS ---
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function toggleSound() {
+            isSoundEnabled = !isSoundEnabled;
+            const btn = document.getElementById('soundBtn');
+            const icon = document.getElementById('soundIcon');
+            if (isSoundEnabled) {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10H3a2 2 0 00-2 2v4a2 2 0 002 2h2l5 5V5l-5 5z"></path>`;
+                btn.classList.remove('text-muted');
+                btn.classList.add('text-[var(--text-main)]');
+            } else {
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>`;
+                btn.classList.add('text-muted');
+                btn.classList.remove('text-[var(--text-main)]');
+            }
+        }
+
+        function playTone(freqStart, freqEnd, type, duration) {
+            if (!isSoundEnabled || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            osc.type = type;
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            osc.frequency.setValueAtTime(freqStart, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freqEnd, audioCtx.currentTime + duration);
+
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playAddPoint() { playTone(600, 1200, 'sine', 0.1); }
+        function playSubPoint() { playTone(400, 200, 'sine', 0.15); }
+        function playWin() {
+            if (!isSoundEnabled || !audioCtx) return;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                setTimeout(() => playTone(freq, freq, 'triangle', 0.3), i * 100);
+            });
+        }
+
+        // --- 4. INTERACTION LOGIC (Tap & Hold) ---
+        function handlePointerDown(e, team) {
+            if (e.target.tagName.toLowerCase() === 'input') return;
+            initAudio();
+
+            const card = e.currentTarget;
+            card.style.transform = 'scale(0.95)';
+            isLongPress = false;
+
+            pressTimer = setTimeout(() => {
+                isLongPress = true;
+                if (navigator.vibrate) navigator.vibrate(40);
+                addPoint(team, -1);
+                playSubPoint();
+
+                intervalTimer = setInterval(() => {
+                    if (navigator.vibrate) navigator.vibrate(40);
+                    addPoint(team, -1);
+                    playSubPoint();
+                }, INTERVAL_MS);
+
+            }, LONG_PRESS_MS);
+        }
+
+        function handlePointerUp(e, team) {
+            if (e.target.tagName.toLowerCase() === 'input') return;
+            const card = e.currentTarget;
+            card.style.transform = 'scale(1)';
+
+            clearTimeout(pressTimer);
+            clearInterval(intervalTimer);
+
+            if (!isLongPress) {
+                addPoint(team, 1);
+                playAddPoint();
+            }
+        }
+
+        function handlePointerCancel(e) {
+            e.currentTarget.style.transform = 'scale(1)';
+            clearTimeout(pressTimer);
+            clearInterval(intervalTimer);
+        }
+
+        // --- 5. GAME LOGIC & RENDERING ---
+        function getSquareSVG(val, teamClass, prevVal) {
+            if (val === 0) return `<div class="w-9 h-9 sm:w-11 sm:h-11 empty-box flex-shrink-0"></div>`;
+
+            let lines = '';
+            const getLine = (index) => `class="truco-line ${index > prevVal ? 'animate-draw' : ''}"`;
+
+            if (val >= 1) lines += `<line x1="20" y1="20" x2="20" y2="80" ${getLine(1)} />`;
+            if (val >= 2) lines += `<line x1="20" y1="80" x2="80" y2="80" ${getLine(2)} />`;
+            if (val >= 3) lines += `<line x1="80" y1="80" x2="80" y2="20" ${getLine(3)} />`;
+            if (val >= 4) lines += `<line x1="80" y1="20" x2="20" y2="20" ${getLine(4)} />`;
+            if (val >= 5) lines += `<line x1="20" y1="20" x2="80" y2="80" ${getLine(5)} />`;
+
+            return `
+                <svg viewBox="0 0 100 100" class="w-9 h-9 sm:w-11 sm:h-11 truco-svg ${teamClass} stroke-[8px] fill-transparent flex-shrink-0">
+                    ${lines}
+                </svg>
+            `;
+        }
+
+        function renderBoxes() {
+            for (let team = 1; team <= 2; team++) {
+                const container = document.getElementById(`boxes${team}`);
+                const score = scores[team];
+                const prevScore = previousScores[team];
+                const teamClass = team === 1 ? 'team1-svg' : 'team2-svg';
+
+                let html = '';
+                let boxesNeeded = maxPoints / 5;
+                let remainingScore = score;
+                let prevRemaining = prevScore;
+
+                for (let i = 0; i < boxesNeeded; i++) {
+                    // Separador horizontal al llegar a la mitad
+                    if (maxPoints === 30 && i === 3) {
+                        html += `<div class="w-10 sm:w-12 border-t-[3px] border-dotted border-[var(--border-color)] opacity-60 my-1"></div>`;
+                    }
+
+                    let valInBox = remainingScore >= 5 ? 5 : (remainingScore > 0 ? remainingScore : 0);
+                    let prevValInBox = prevRemaining >= 5 ? 5 : (prevRemaining > 0 ? prevRemaining : 0);
+
+                    remainingScore -= valInBox;
+                    prevRemaining -= prevValInBox;
+
+                    html += getSquareSVG(valInBox, teamClass, prevValInBox);
+                }
+
+                container.innerHTML = html;
+
+                const numEl = document.getElementById(`score${team}Num`);
+                if (numEl.innerText != score) {
+                    numEl.style.transform = 'scale(1.1)';
+                    setTimeout(() => numEl.style.transform = 'scale(1)', 150);
+                }
+                numEl.innerText = score;
+                numEl.style.transition = 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)';
+            }
+        }
+
+        function addPoint(team, points) {
+            previousScores = { ...scores };
+            scores[team] += points;
+
+            if (scores[team] < 0) scores[team] = 0;
+            if (scores[team] > maxPoints) scores[team] = maxPoints;
+
+            renderBoxes();
+            saveGameState(); // Persist memory
+
+            if (scores[team] === maxPoints && points > 0) {
+                clearTimeout(pressTimer);
+                clearInterval(intervalTimer);
+                setTimeout(() => {
+                    playWin();
+                    saveMatchToHistory(team);
+                    showWinnerModal(team);
+                }, 200);
+            }
+        }
+
+        function changeMaxPoints() {
+            previousScores = { ...scores };
+            maxPoints = parseInt(document.getElementById('maxPoints').value);
+            if (scores[1] > maxPoints) scores[1] = maxPoints;
+            if (scores[2] > maxPoints) scores[2] = maxPoints;
+            renderBoxes();
+            saveGameState(); // Persist memory
+        }
+
+        function resetGame() {
+            previousScores = { ...scores };
+            scores = { 1: 0, 2: 0 };
+            renderBoxes();
+            saveGameState(); // Persist memory
+        }
+
+        let confirmResetState = false;
+        function confirmReset() {
+            const btn = document.getElementById('resetBtn');
+            if (!confirmResetState) {
+                btn.innerText = '¿Seguro?';
+                btn.classList.add('text-red-500', 'border-red-400', 'bg-red-50', 'dark:bg-red-900/20');
+                confirmResetState = true;
+
+                setTimeout(() => {
+                    if (confirmResetState) {
+                        confirmResetState = false;
+                        btn.innerText = 'Reiniciar';
+                        btn.classList.remove('text-red-500', 'border-red-400', 'bg-red-50', 'dark:bg-red-900/20');
+                    }
+                }, 3000);
+            } else {
+                resetGame();
+                confirmResetState = false;
+                btn.innerText = 'Reiniciar';
+                btn.classList.remove('text-red-500', 'border-red-400', 'bg-red-50', 'dark:bg-red-900/20');
+            }
+        }
+
+        // --- 6. HISTORY SYSTEM ---
+        function saveMatchToHistory(winningTeam) {
+            const name1 = document.getElementById('name1').value || 'Nosotros';
+            const name2 = document.getElementById('name2').value || 'Ellos';
+
+            const match = {
+                id: Date.now(),
+                date: new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date()),
+                team1: name1,
+                team2: name2,
+                score1: scores[1],
+                score2: scores[2],
+                winner: winningTeam === 1 ? name1 : name2,
+                max: maxPoints
+            };
+
+            let history = JSON.parse(localStorage.getItem('trucoCuteHistory') || '[]');
+            history.unshift(match);
+            if (history.length > 20) history.pop();
+            localStorage.setItem('trucoCuteHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            const history = JSON.parse(localStorage.getItem('trucoCuteHistory') || '[]');
+
+            if (history.length === 0) {
+                list.innerHTML = `<p class="text-muted text-center text-sm italic py-8">No hay partidas registradas.</p>`;
+                return;
+            }
+
+            list.innerHTML = history.map(match => `
+                <div class="bg-[var(--card-bg)] p-3.5 rounded-2xl border border-[var(--border-color)] text-sm flex flex-col gap-1 shadow-sm">
+                    <div class="flex justify-between text-[10px] text-muted font-black uppercase tracking-wider">
+                        <span>A ${match.max} pts</span>
+                        <span>${match.date}</span>
+                    </div>
+                    <div class="flex justify-between items-center font-black mt-1">
+                        <span class="${match.score1 > match.score2 ? 'text-[var(--t1-text)]' : 'opacity-60'}">${match.team1} (${match.score1})</span>
+                        <span class="text-muted text-xs mx-2">vs</span>
+                        <span class="${match.score2 > match.score1 ? 'text-[var(--t2-text)]' : 'opacity-60'}">${match.team2} (${match.score2})</span>
+                    </div>
+                    <div class="text-[11px] mt-1 text-center font-bold text-[var(--text-main)] opacity-80">
+                        🏆 Ganador: ${match.winner}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let confirmDeleteState = false;
+        function clearHistory() {
+            const btn = document.getElementById('clearHistoryBtn');
+            if (!confirmDeleteState) {
+                btn.innerText = '¿Seguro? Toca para confirmar';
+                btn.classList.add('text-red-400');
+                btn.classList.remove('text-[var(--text-muted)]');
+                confirmDeleteState = true;
+
+                setTimeout(() => {
+                    if (confirmDeleteState) {
+                        confirmDeleteState = false;
+                        btn.innerText = 'Borrar Historial';
+                        btn.classList.remove('text-red-400');
+                        btn.classList.add('text-[var(--text-muted)]');
+                    }
+                }, 3000);
+            } else {
+                localStorage.removeItem('trucoCuteHistory');
+                renderHistory();
+                confirmDeleteState = false;
+                btn.innerText = 'Borrar Historial';
+                btn.classList.remove('text-red-400');
+                btn.classList.add('text-[var(--text-muted)]');
+            }
+        }
+
+        // --- 7. UI MODALS & THEME ---
+        function toggleTheme() {
+            isOled = !isOled;
+            const icon = document.getElementById('themeIcon');
+            const metaTheme = document.getElementById('meta-theme-color');
+
+            if (isOled) {
+                document.body.classList.add('oled-mode');
+                metaTheme.setAttribute("content", "#000000");
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
+            } else {
+                document.body.classList.remove('oled-mode');
+                metaTheme.setAttribute("content", "#FAFAFA");
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
+            }
+            saveGameState(); // Persist theme change
+        }
+
+        function showWinnerModal(team) {
+            const teamName = document.getElementById(`name${team}`).value || (team === 1 ? 'Nosotros' : 'Ellos');
+            const colorClass = team === 1 ? 'var(--t1-text)' : 'var(--t2-text)';
+
+            document.getElementById('winnerText').innerHTML = `<span style="color: ${colorClass}">${teamName}</span>`;
+            openModal('winnerModal', 'winnerContent');
+        }
+
+        function openModal(overlayId, contentId = null) {
+            const modal = document.getElementById(overlayId);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            if (overlayId === 'historyModal') renderHistory();
+
+            void modal.offsetWidth;
+
+            modal.classList.remove('opacity-0');
+            if (contentId) {
+                const content = document.getElementById(contentId);
+                content.classList.remove('scale-90');
+                content.classList.add('scale-100');
+            }
+        }
+
+        function closeModal(overlayId, contentId = null, doReset = false) {
+            const modal = document.getElementById(overlayId);
+            modal.classList.add('opacity-0');
+
+            if (contentId) {
+                const content = document.getElementById(contentId);
+                content.classList.remove('scale-100');
+                content.classList.add('scale-90');
+            }
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                if (doReset) resetGame();
+            }, 300);
+        }
+
+        // --- 8. INITIALIZATION ---
+        loadGameState(); // Load prior memory if any
+        renderBoxes();
+        renderHistory();
+    </script>
 </body>
 
 </html>
