@@ -44,15 +44,15 @@
             --text-muted: #4A5568;
             --card-bg: #000000;
             /* Negro absoluto */
-            --card-border: #1A1A1A;
-            /* Borde muy sutil para diferenciar */
+            --card-border: #151515;
+            /* Borde ultra sutil para diferenciar sin brillo */
             --t1-color: #FC8181;
             --t1-text: #FEB2B2;
             --t1-shadow: rgba(252, 129, 129, 0.15);
             --t2-color: #63B3ED;
             --t2-text: #90CDF4;
             --t2-shadow: rgba(99, 179, 237, 0.15);
-            --border-color: #1A1A1A;
+            --border-color: #151515;
             --overlay-bg: rgba(0, 0, 0, 0.95);
             --app-bg-gradient: none;
             /* Elimina degradados */
@@ -94,11 +94,12 @@
             box-shadow: 0 20px 50px -10px var(--t2-shadow);
         }
 
-        /* Oled overrides to remove glass blur */
+        /* Oled overrides to remove glass blur completely */
         .oled-mode .team-card {
             box-shadow: none;
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
+            background: #000000;
         }
 
         .team1-text {
@@ -117,7 +118,7 @@
             text-align: center;
             font-weight: 900;
             width: 90%;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             border-bottom: 2px solid transparent;
             transition: border-bottom 0.3s;
             cursor: text;
@@ -185,7 +186,7 @@
             height: 4px;
             background-color: var(--text-muted);
             border-radius: 50%;
-            opacity: 0.2;
+            opacity: 0.25;
         }
 
         /* Modals */
@@ -258,37 +259,39 @@
     </style>
 </head>
 
-<body class="min-h-[100dvh] flex flex-col items-center justify-center p-3 sm:p-6" oncontextmenu="return false;">
+<body class="h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-center p-2 sm:p-4"
+    oncontextmenu="return false;">
 
-    <div class="max-w-md w-full flex flex-col flex-1 gap-4 sm:gap-5 relative py-2 sm:py-0 justify-between">
+    <div class="max-w-md w-full h-full flex flex-col gap-2.5 sm:gap-4 relative py-1 justify-between">
 
         <!-- Header Controls -->
-        <header class="flex justify-between items-center px-2">
+        <header class="flex justify-between items-center px-2 flex-shrink-0">
             <div>
-                <h1 class="text-3xl font-black tracking-tighter">Truco</h1>
-                <p class="text-[10px] text-muted font-bold tracking-widest uppercase ml-1">Anotador Pro</p>
+                <h1 class="text-2xl sm:text-3xl font-black tracking-tighter">Truco</h1>
+                <p class="text-[9px] sm:text-[10px] text-muted font-bold tracking-widest uppercase ml-1">Anotador Pro
+                </p>
             </div>
 
             <div
-                class="flex items-center gap-1 sm:gap-2 bg-[var(--card-bg)] px-2 sm:px-3 py-1.5 sm:py-2 rounded-full border border-[var(--card-border)] shadow-sm backdrop-blur-md">
+                class="flex items-center gap-1 sm:gap-2 bg-[var(--card-bg)] px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[var(--card-border)] shadow-sm backdrop-blur-md">
 
                 <button onclick="installApp()" id="installBtn" class="icon-btn hidden text-[var(--t2-text)]"
                     aria-label="Instalar App">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                     </svg>
                 </button>
 
                 <button onclick="openModal('rulesModal')" class="icon-btn" aria-label="Reglas del Truco">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
                     </svg>
                 </button>
 
                 <button onclick="openModal('historyModal')" class="icon-btn" aria-label="Historial">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -296,7 +299,8 @@
 
                 <button onclick="toggleSound()" id="soundBtn" class="icon-btn text-[var(--text-main)]"
                     aria-label="Sonido">
-                    <svg id="soundIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="soundIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10H3a2 2 0 00-2 2v4a2 2 0 002 2h2l5 5V5l-5 5z">
                         </path>
@@ -304,7 +308,8 @@
                 </button>
 
                 <button onclick="toggleTheme()" class="icon-btn" aria-label="Tema OLED">
-                    <svg id="themeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="themeIcon" class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
                         </path>
@@ -314,60 +319,58 @@
         </header>
 
         <!-- Main Board -->
-        <main class="flex-1 grid grid-cols-2 gap-3 sm:gap-4 my-2">
+        <main class="flex-1 grid grid-cols-2 gap-3 sm:gap-4 my-1 overflow-hidden">
 
             <!-- Team 1 -->
-            <div class="team-card team1-card h-full p-4 sm:p-6 justify-between flex-1"
+            <div class="team-card team1-card h-full p-3 sm:p-5 justify-between flex-1"
                 onpointerdown="handlePointerDown(event, 1)" onpointerup="handlePointerUp(event, 1)"
                 onpointerleave="handlePointerCancel(event)" onpointercancel="handlePointerCancel(event)">
 
-                <div class="w-full text-center mt-2">
+                <div class="w-full text-center mt-1 flex-shrink-0">
                     <input type="text" id="name1" value="Nosotros"
-                        class="team-input text-2xl team1-text mb-2 relative z-10" onclick="event.stopPropagation()"
-                        oninput="saveGameState()">
-                    <div class="text-[5rem] sm:text-7xl font-black team1-text mb-2 tracking-tighter leading-none"
+                        class="team-input text-lg sm:text-2xl team1-text mb-1 relative z-10"
+                        onclick="event.stopPropagation()" oninput="saveGameState()">
+                    <!-- Texto de puntaje escalable basado en la altura de la pantalla (vh) -->
+                    <div class="text-[clamp(3.5rem,8vh,5.5rem)] font-black team1-text mb-1 tracking-tighter leading-none"
                         id="score1Num">0</div>
                 </div>
 
-                <!-- Ajustado a disposición VERTICAL con flex-col -->
+                <!-- Cajas verticalmente distribuidas con tamaño dinámico -->
                 <div id="boxes1"
-                    class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 w-full pointer-events-none flex-1 min-h-[150px]">
+                    class="flex flex-col items-center justify-center gap-[clamp(0.2rem,1vh,0.75rem)] w-full pointer-events-none flex-1 min-h-[50px] overflow-hidden py-1">
                 </div>
 
-                <div class="info-pill rounded-2xl px-3 py-2 mt-2 mb-1 pointer-events-none w-[90%] sm:w-auto">
+                <div class="info-pill rounded-xl px-3 py-1.5 mt-2 mb-0.5 pointer-events-none flex-shrink-0">
                     <p
-                        class="text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-relaxed mx-auto w-fit">
-                        &bull; Toque +1
-                        <br>
-                        &bull; Mantener -1
+                        class="text-[8px] sm:text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-snug mx-auto w-fit">
+                        &bull; Toque +1<br>&bull; Mantener -1
                     </p>
                 </div>
             </div>
 
             <!-- Team 2 -->
-            <div class="team-card team2-card h-full p-4 sm:p-6 justify-between flex-1"
+            <div class="team-card team2-card h-full p-3 sm:p-5 justify-between flex-1"
                 onpointerdown="handlePointerDown(event, 2)" onpointerup="handlePointerUp(event, 2)"
                 onpointerleave="handlePointerCancel(event)" onpointercancel="handlePointerCancel(event)">
 
-                <div class="w-full text-center mt-2">
+                <div class="w-full text-center mt-1 flex-shrink-0">
                     <input type="text" id="name2" value="Ellos"
-                        class="team-input text-2xl team2-text mb-2 relative z-10" onclick="event.stopPropagation()"
-                        oninput="saveGameState()">
-                    <div class="text-[5rem] sm:text-7xl font-black team2-text mb-2 tracking-tighter leading-none"
+                        class="team-input text-lg sm:text-2xl team2-text mb-1 relative z-10"
+                        onclick="event.stopPropagation()" oninput="saveGameState()">
+                    <!-- Texto de puntaje escalable basado en la altura de la pantalla (vh) -->
+                    <div class="text-[clamp(3.5rem,8vh,5.5rem)] font-black team2-text mb-1 tracking-tighter leading-none"
                         id="score2Num">0</div>
                 </div>
 
-                <!-- Ajustado a disposición VERTICAL con flex-col -->
+                <!-- Cajas verticalmente distribuidas con tamaño dinámico -->
                 <div id="boxes2"
-                    class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 w-full pointer-events-none flex-1 min-h-[150px]">
+                    class="flex flex-col items-center justify-center gap-[clamp(0.2rem,1vh,0.75rem)] w-full pointer-events-none flex-1 min-h-[50px] overflow-hidden py-1">
                 </div>
 
-                <div class="info-pill rounded-2xl px-3 py-2 mt-2 mb-1 pointer-events-none w-[90%] sm:w-auto">
+                <div class="info-pill rounded-xl px-3 py-1.5 mt-2 mb-0.5 pointer-events-none flex-shrink-0">
                     <p
-                        class="text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-relaxed mx-auto w-fit">
-                        &bull; Toque +1
-                        <br>
-                        &bull; Mantener -1
+                        class="text-[8px] sm:text-[9px] text-muted font-black uppercase tracking-widest text-left opacity-80 leading-snug mx-auto w-fit">
+                        &bull; Toque +1<br>&bull; Mantener -1
                     </p>
                 </div>
             </div>
@@ -375,15 +378,15 @@
         </main>
 
         <!-- Footer Settings -->
-        <div class="flex justify-between items-center gap-3 mt-1">
+        <div class="flex justify-between items-center gap-2 sm:gap-3 mt-1 flex-shrink-0">
             <select id="maxPoints" onchange="changeMaxPoints()"
-                class="bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-main)] rounded-2xl px-4 sm:px-5 py-4 font-bold focus:outline-none appearance-none cursor-pointer flex-1 text-center shadow-sm backdrop-blur-md text-sm sm:text-base">
+                class="bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-main)] rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 font-bold focus:outline-none appearance-none cursor-pointer flex-1 text-center shadow-sm backdrop-blur-md text-sm sm:text-base">
                 <option value="30">Jugar a 30 Puntos</option>
                 <option value="15">Jugar a 15 Puntos</option>
             </select>
 
             <button id="resetBtn" onclick="confirmReset()"
-                class="bg-transparent border border-[var(--border-color)] text-[var(--text-main)] font-bold rounded-2xl px-4 sm:px-5 py-4 opacity-70 hover:opacity-100 transition-all shadow-sm backdrop-blur-md hover:bg-[var(--border-color)] text-sm sm:text-base">
+                class="bg-transparent border border-[var(--border-color)] text-[var(--text-main)] font-bold rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 opacity-70 hover:opacity-100 transition-all shadow-sm backdrop-blur-md hover:bg-[var(--border-color)] text-sm sm:text-base">
                 Reiniciar
             </button>
         </div>
@@ -672,8 +675,12 @@
         }
 
         // --- 5. GAME LOGIC & RENDERING ---
+
+        // Dynamic responsive sizing for SVG and Empty box using CSS clamp function
+        const boxSizeClass = "w-[clamp(2.5rem,6.5vh,4.5rem)] h-[clamp(2.5rem,6.5vh,4.5rem)]";
+
         function getSquareSVG(val, teamClass, prevVal) {
-            if (val === 0) return `<div class="w-9 h-9 sm:w-11 sm:h-11 empty-box flex-shrink-0"></div>`;
+            if (val === 0) return `<div class="${boxSizeClass} empty-box flex-shrink-0"></div>`;
 
             let lines = '';
             const getLine = (index) => `class="truco-line ${index > prevVal ? 'animate-draw' : ''}"`;
@@ -685,7 +692,7 @@
             if (val >= 5) lines += `<line x1="20" y1="20" x2="80" y2="80" ${getLine(5)} />`;
 
             return `
-                <svg viewBox="0 0 100 100" class="w-9 h-9 sm:w-11 sm:h-11 truco-svg ${teamClass} stroke-[8px] fill-transparent flex-shrink-0">
+                <svg viewBox="0 0 100 100" class="${boxSizeClass} truco-svg ${teamClass} stroke-[8px] fill-transparent flex-shrink-0">
                     ${lines}
                 </svg>
             `;
@@ -704,9 +711,9 @@
                 let prevRemaining = prevScore;
 
                 for (let i = 0; i < boxesNeeded; i++) {
-                    // Separador horizontal al llegar a la mitad
+                    // Separador horizontal al llegar a la mitad (también dinámico)
                     if (maxPoints === 30 && i === 3) {
-                        html += `<div class="w-10 sm:w-12 border-t-[3px] border-dotted border-[var(--border-color)] opacity-60 my-1"></div>`;
+                        html += `<div class="w-[clamp(3rem,8vh,5rem)] border-t-[3px] border-dotted border-[var(--border-color)] opacity-60 my-0.5 sm:my-1 flex-shrink-0"></div>`;
                     }
 
                     let valInBox = remainingScore >= 5 ? 5 : (remainingScore > 0 ? remainingScore : 0);
