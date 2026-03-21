@@ -10,10 +10,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-    <!-- PWA Manifest & App Info injected dynamically via JS below -->
-    <link rel="icon" id="favicon" type="image/svg+xml">
-    <link rel="apple-touch-icon" id="apple-touch-icon">
-    <link rel="manifest" id="manifest-link">
+    <!-- PWA Manifest & App Info -->
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="logo.svg">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#FAFAFA" id="meta-theme-color">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -555,32 +555,12 @@
 
     <script>
         // --- 1. SETUP OFFLINE PWA CAPABILITIES ---
-        const svgIconBase64 = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='pbg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFEED6'/%3E%3Cstop offset='100%25' stop-color='%23FFDDDD'/%3E%3C/linearGradient%3E%3ClinearGradient id='vpc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFAFC4'/%3E%3Cstop offset='100%25' stop-color='%23FF8EAD'/%3E%3C/linearGradient%3E%3ClinearGradient id='vmc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FF758C'/%3E%3Cstop offset='100%25' stop-color='%23FF7EA5'/%3E%3C/linearGradient%3E%3ClinearGradient id='vbc' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23A1C4FD'/%3E%3Cstop offset='100%25' stop-color='%2380B9FB'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='url(%23pbg)'/%3E%3Cg transform='translate(256, 256) rotate(-12) translate(-256, -256)'%3E%3Crect x='126' y='88' width='260' height='360' rx='36' fill='%23FF8EAD' opacity='0.5'/%3E%3Crect x='126' y='76' width='260' height='360' rx='36' fill='url(%23vpc)'/%3E%3Crect x='146' y='96' width='220' height='320' rx='20' fill='none' stroke='%23FFFFFF' stroke-opacity='0.6' stroke-width='6'/%3E%3C/g%3E%3Cg transform='translate(256, 256) rotate(6) translate(-256, -256)'%3E%3Crect x='126' y='88' width='260' height='360' rx='36' fill='%23FFCFDB' opacity='0.6'/%3E%3Crect x='126' y='76' width='260' height='360' rx='36' fill='%23FFFFFF'/%3E%3Crect x='146' y='96' width='220' height='320' rx='20' fill='none' stroke='%23F1F5F9' stroke-width='6'/%3E%3Cg fill='none' stroke-width='32' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='190' y='190' width='132' height='132' rx='24' stroke='url(%23vmc)'/%3E%3Cline x1='174' y='174' x2='338' y='338' stroke='url(%23vbc)'/%3E%3C/g%3E%3Ccircle cx='170' cy='120' r='14' fill='url(%23vmc)'/%3E%3Ccircle cx='342' cy='392' r='14' fill='url(%23vbc)'/%3E%3C/g%3E%3C/svg%3E";
-        const manifest = {
-            "name": "Truco Anotador Pro",
-            "short_name": "Truco Pro",
-            "start_url": ".",
-            "display": "standalone",
-            "background_color": "#FAFAFA",
-            "theme_color": "#FAFAFA",
-            "description": "Anotador minimalista de truco argentino",
-            "icons": [{ "src": svgIconBase64, "sizes": "512x512", "type": "image/svg+xml" }]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-        document.getElementById('manifest-link').href = URL.createObjectURL(manifestBlob);
-        document.getElementById('favicon').href = svgIconBase64;
-        document.getElementById('apple-touch-icon').href = svgIconBase64;
-
         if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', (e) => { e.waitUntil(self.skipWaiting()); });
-                self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
-                self.addEventListener('fetch', (e) => {
-                    e.respondWith(fetch(e.request).catch(() => new Response('App Offline. Please run from cached PWA.')));
-                });
-            `;
-            const swBlob = new Blob([swCode], { type: 'application/javascript' });
-            navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => { });
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => console.log('Service Worker Registrado: ', reg.scope))
+                    .catch((err) => console.error('Error registrando Service Worker: ', err));
+            });
         }
 
         let deferredPrompt;

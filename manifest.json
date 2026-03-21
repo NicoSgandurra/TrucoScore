@@ -1,0 +1,17 @@
+{
+  "name": "Truco Anotador Pro",
+  "short_name": "Truco Pro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "theme_color": "#FAFAFA",
+  "description": "Anotador minimalista de truco argentino, 100% offline.",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
