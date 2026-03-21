@@ -269,7 +269,8 @@
         <!-- Header Controls -->
         <header class="flex justify-between items-center px-2 flex-shrink-0">
             <div class="flex items-center gap-2.5 sm:gap-3">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-10 h-10 sm:w-12 sm:h-12 shadow-sm border border-[var(--border-color)] rounded-[10px] sm:rounded-xl flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                    class="w-10 h-10 sm:w-12 sm:h-12 shadow-sm border border-[var(--border-color)] rounded-[10px] sm:rounded-xl flex-shrink-0">
                     <defs>
                         <!-- Background: Cute Pastel Cream -->
                         <linearGradient id="bgPastel" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -282,7 +283,7 @@
                             <stop offset="0%" stop-color="#FFAFC4" />
                             <stop offset="100%" stop-color="#FF8EAD" />
                         </linearGradient>
-                        
+
                         <!-- Matchsticks (Nosotros - Pink) -->
                         <linearGradient id="matchColor" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#FF758C" />
@@ -304,7 +305,9 @@
                         <rect x="126" y="88" width="260" height="360" rx="36" fill="#FF8EAD" opacity="0.5" />
                         <rect x="126" y="76" width="260" height="360" rx="36" fill="url(#pinkCard)" />
                         <!-- Border -->
-                        <rect x="146" y="96" width="220" height="320" rx="20" fill="none" class="stroke-[var(--bg-color)] opacity-60 transition-colors duration-500" stroke-width="6" />
+                        <rect x="146" y="96" width="220" height="320" rx="20" fill="none"
+                            class="stroke-[var(--bg-color)] opacity-60 transition-colors duration-500"
+                            stroke-width="6" />
                     </g>
 
                     <!-- Front Card (White, tilted right) -->
@@ -312,10 +315,13 @@
                         <!-- Shadow -->
                         <rect x="126" y="88" width="260" height="360" rx="36" fill="#FFCFDB" opacity="0.6" />
                         <!-- Body -->
-                        <rect x="126" y="76" width="260" height="360" rx="36" class="fill-[var(--card-bg)] transition-colors duration-500 ease-in-out" />
+                        <rect x="126" y="76" width="260" height="360" rx="36"
+                            class="fill-[var(--card-bg)] transition-colors duration-500 ease-in-out" />
                         <!-- Border -->
-                        <rect x="146" y="96" width="220" height="320" rx="20" fill="none" class="stroke-[var(--border-color)] transition-colors duration-500 ease-in-out" stroke-width="6" />
-                        
+                        <rect x="146" y="96" width="220" height="320" rx="20" fill="none"
+                            class="stroke-[var(--border-color)] transition-colors duration-500 ease-in-out"
+                            stroke-width="6" />
+
                         <!-- 5 Points Matchsticks -->
                         <g fill="none" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="190" y="190" width="132" height="132" rx="24" stroke="url(#matchColor)" />
@@ -329,7 +335,8 @@
                 </svg>
                 <div class="flex flex-col justify-center">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tighter leading-none -mb-0.5">Truco</h1>
-                    <p class="text-[9px] sm:text-[10px] text-muted font-black tracking-widest uppercase ml-0.5 mt-0.5">Anotador Pro
+                    <p class="text-[9px] sm:text-[10px] text-muted font-black tracking-widest uppercase ml-0.5 mt-0.5">
+                        Anotador Pro
                     </p>
                 </div>
             </div>
@@ -458,18 +465,11 @@
 
     <!-- 1. Winner Modal -->
     <div id="winnerModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0">
-        <div class="modal-content rounded-[2.5rem] p-6 max-w-sm w-[90%] text-center transform scale-90 backdrop-blur-xl"
+        <div class="modal-content rounded-[2.5rem] p-8 max-w-sm w-[90%] text-center transform scale-90 backdrop-blur-xl"
             id="winnerContent">
             <div class="text-6xl mb-4 animate-bounce">👑</div>
             <h2 class="text-2xl font-black mb-2 tracking-tight">¡Partida Terminada!</h2>
-            <p class="text-lg font-bold mb-6 text-muted" id="winnerText">Ganó el equipo</p>
-            
-            <button onclick="shareResult()" id="shareBtn"
-                class="w-full py-4 mb-3 rounded-2xl bg-[#25D366] text-white font-black text-lg shadow-xl hover:scale-[1.03] transition-transform flex items-center justify-center gap-2">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.17.69 4.18 1.85 5.81L3 22l4.31-.83A9.95 9.95 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm4.81 14.39c-.21.6-1.22 1.15-1.7 1.25-.41.09-.94.13-1.63-.09-.43-.13-1.04-.32-1.89-.68-3.62-1.54-5.95-5.32-6.13-5.55-.18-.24-1.46-1.95-1.46-3.72 0-1.77.92-2.65 1.25-3.02.32-.36.7-.45.94-.45.24 0 .48 0 .69.01.21.01.49-.08.77.58.28.67.97 2.37 1.05 2.55s.16.39.05.62c-.11.24-.16.39-.32.58-.16.19-.34.42-.48.56-.16.16-.33.34-.14.67.18.32.81 1.35 1.74 2.18 1.21 1.07 2.22 1.41 2.54 1.56.32.16.51.13.7-.09.19-.22.82-1.02 1.05-1.37.22-.35.45-.29.74-.18.29.11 1.84.87 2.15 1.03.32.16.53.24.6.38.09.14.09.82-.12 1.42z"/></svg>
-                Compartir Victoria
-            </button>
-
+            <p class="text-lg font-bold mb-8 text-muted" id="winnerText">Ganó el equipo</p>
             <button onclick="closeModal('winnerModal', 'winnerContent', true)"
                 class="w-full py-4 rounded-2xl bg-[var(--text-main)] text-[var(--bg-color)] font-black text-lg shadow-xl hover:scale-[1.03] transition-transform">
                 Nueva Partida
@@ -985,93 +985,6 @@
                 const content = document.getElementById(contentId);
                 content.classList.remove('scale-90');
                 content.classList.add('scale-100');
-            }
-        }
-
-        async function shareResult() {
-            const btn = document.getElementById('shareBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '⏳ Generando...';
-            btn.disabled = true;
-
-            try {
-                const name1 = document.getElementById('name1').value || 'Nosotros';
-                const name2 = document.getElementById('name2').value || 'Ellos';
-                const cleanLogo = decodeURIComponent(svgIconBase64.replace('data:image/svg+xml;charset=utf-8,', ''));
-
-                const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
-                    <defs>
-                        <linearGradient id="snapBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FFF5F5"/>
-                            <stop offset="100%" stop-color="#F3F4F6"/>
-                        </linearGradient>
-                        <filter id="shadowStr" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#A1C4FD" flood-opacity="0.2"/>
-                        </filter>
-                    </defs>
-                    <rect width="1080" height="1080" fill="url(#snapBg)"/>
-                    
-                    <g transform="translate(540, 360) scale(0.6) translate(-256, -256)" filter="url(#shadowStr)">
-                        ${cleanLogo}
-                    </g>
-                    
-                    <text x="540" y="680" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="72" text-anchor="middle" fill="#1e293b">¡PARTIDA TERMINADA!</text>
-                    
-                    <text x="320" y="820" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="96" text-anchor="middle" fill="#FF758C">${scores[1]}</text>
-                    <text x="320" y="870" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="40" text-anchor="middle" fill="#FF758C">${name1}</text>
-                    
-                    <text x="540" y="830" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="64" text-anchor="middle" fill="#94a3b8">VS</text>
-
-                    <text x="760" y="820" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="96" text-anchor="middle" fill="#63B3ED">${scores[2]}</text>
-                    <text x="760" y="870" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="40" text-anchor="middle" fill="#63B3ED">${name2}</text>
-                    
-                    <text x="540" y="1030" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="32" text-anchor="middle" fill="#cbd5e1">Anotado con TrucoScore Pro</text>
-                </svg>`;
-
-                const canvas = document.createElement('canvas');
-                canvas.width = 1080;
-                canvas.height = 1080;
-                const ctx = canvas.getContext('2d');
-                
-                const img = new Image();
-                img.crossOrigin = "anonymous";
-                img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString);
-                
-                await new Promise((resolve, reject) => {
-                    img.onload = () => {
-                        ctx.drawImage(img, 0, 0);
-                        resolve();
-                    };
-                    img.onerror = () => reject("Error loading SVG");
-                });
-                
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], 'trucoscore.png', { type: 'image/png' });
-                    
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        try {
-                            await navigator.share({
-                                title: 'Resultado del Truco',
-                                text: '¡Partida terminada! Así quedamos 🔥',
-                                files: [file]
-                            });
-                        } catch(e) { console.log('Share canceled'); }
-                    } else {
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = 'trucoscore-resultado.png';
-                        a.click();
-                        alert('¡Imagen guardada! Ahora puedes compartirla.');
-                    }
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 'image/png');
-                
-            } catch (err) {
-                console.error(err);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                alert('Hubo un problema. Intenta de nuevo.');
             }
         }
 
