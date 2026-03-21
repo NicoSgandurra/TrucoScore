@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Background: Cute Pastel Cream -->
+    <linearGradient id="bgPastel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEED6" />
+      <stop offset="100%" stop-color="#FFDDDD" />
+    </linearGradient>
+
+    <!-- Back Card: Soft Pink -->
+    <linearGradient id="pinkCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFAFC4" />
+      <stop offset="100%" stop-color="#FF8EAD" />
+    </linearGradient>
+    
+    <!-- Matchsticks (Nosotros - Pink) -->
+    <linearGradient id="matchColor" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF758C" />
+      <stop offset="100%" stop-color="#FF7EA5" />
+    </linearGradient>
+
+    <!-- Matchsticks (Ellos - Blue) -->
+    <linearGradient id="blueColor" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A1C4FD" />
+      <stop offset="100%" stop-color="#80B9FB" />
+    </linearGradient>
+  </defs>
+
+  <!-- Squircle Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bgPastel)" />
+
+  <!-- Back Card (Pink, tilted left) -->
+  <g transform="translate(256, 256) rotate(-12) translate(-256, -256)">
+    <rect x="126" y="88" width="260" height="360" rx="36" fill="#FF8EAD" opacity="0.5" />
+    <rect x="126" y="76" width="260" height="360" rx="36" fill="url(#pinkCard)" />
+    <!-- Border -->
+    <rect x="146" y="96" width="220" height="320" rx="20" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="6" />
+  </g>
+
+  <!-- Front Card (White, tilted right) -->
+  <g transform="translate(256, 256) rotate(6) translate(-256, -256)">
+    <!-- Shadow -->
+    <rect x="126" y="88" width="260" height="360" rx="36" fill="#FFCFDB" opacity="0.6" />
+    <!-- Body -->
+    <rect x="126" y="76" width="260" height="360" rx="36" fill="#FFFFFF" />
+    <!-- Border -->
+    <rect x="146" y="96" width="220" height="320" rx="20" fill="none" stroke="#F1F5F9" stroke-width="6" />
+    
+    <!-- 5 Points Matchsticks -->
+    <g fill="none" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="190" y="190" width="132" height="132" rx="24" stroke="url(#matchColor)" />
+      <line x1="174" y1="174" x2="338" y2="338" stroke="url(#blueColor)" />
+    </g>
+
+    <!-- Corner Dots -->
+    <circle cx="170" cy="120" r="14" fill="url(#matchColor)" />
+    <circle cx="342" cy="392" r="14" fill="url(#blueColor)" />
+  </g>
+</svg>
