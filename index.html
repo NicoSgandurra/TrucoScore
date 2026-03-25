@@ -382,6 +382,12 @@
                         </path>
                     </svg>
                 </button>
+
+                <button onclick="hardReload()" class="icon-btn text-[var(--text-main)]" aria-label="Forzar Actualización">
+                    <svg id="reloadIcon" class="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </button>
             </div>
         </header>
 
@@ -563,6 +569,27 @@
                     </ul>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Update Confirmation Modal -->
+    <div id="updateModal" class="modal-overlay fixed inset-0 hidden items-center justify-center z-50 opacity-0"
+        onclick="closeModal('updateModal', 'updateContent')">
+        <div class="modal-content rounded-[2.5rem] p-8 max-w-sm w-[90%] text-center transform scale-90 backdrop-blur-xl"
+            id="updateContent" onclick="event.stopPropagation()">
+            <div class="text-5xl mb-4">🔄</div>
+            <h2 class="text-2xl font-black mb-2 tracking-tight">¿Actualizar App?</h2>
+            <p class="text-[13px] font-bold mb-6 text-muted opacity-90 leading-tight">Esto limpiará la caché y recargará la última versión. Tus partidas no se perderán.</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="confirmHardReload()"
+                    class="w-full py-3.5 rounded-2xl bg-[var(--text-main)] text-[var(--bg-color)] font-black text-base shadow-xl hover:scale-[1.02] transition-transform">
+                    Sí, Actualizar
+                </button>
+                <button onclick="closeModal('updateModal', 'updateContent')"
+                    class="w-full py-3.5 rounded-2xl bg-transparent border-2 border-[var(--border-color)] text-[var(--text-main)] font-black text-base opacity-80 hover:opacity-100 transition-opacity">
+                    Cancelar
+                </button>
             </div>
         </div>
     </div>
@@ -999,7 +1026,41 @@
             }, 300);
         }
 
-        // --- 8. INITIALIZATION ---
+        // --- 8. SYSTEM TOOLS FOR UPDATE ---
+        function hardReload() {
+            openModal('updateModal', 'updateContent');
+        }
+
+        function confirmHardReload() {
+            closeModal('updateModal', 'updateContent');
+            
+            setTimeout(() => {
+                const btn = document.getElementById('reloadIcon');
+                if(btn) btn.classList.add('animate-[spin_0.5s_linear_infinite]');
+                
+                // 1. Eliminar Service Workers
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                        for(let registration of registrations) {
+                            registration.unregister();
+                        }
+                    });
+                }
+                // 2. Eliminar Cache
+                if ('caches' in window) {
+                    caches.keys().then((keyList) => {
+                        return Promise.all(keyList.map((key) => caches.delete(key)));
+                    });
+                }
+                
+                // 3. Recargar página limpiando la red
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 600);
+            }, 300); // Esperar que cierre el modal
+        }
+
+        // --- 9. INITIALIZATION ---
         loadGameState(); // Load prior memory if any
         renderBoxes();
         renderHistory();
