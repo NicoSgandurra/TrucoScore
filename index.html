@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Truco Anotador Pro</title>
+    <title>Truco Anotador</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -26,14 +26,12 @@
             --text-muted: #A0AEC0;
             --card-bg: rgba(255, 255, 255, 0.6);
             --card-border: rgba(255, 255, 255, 0.8);
-            --t1-color: #FF9A9E;
-            /* Pink Gradient Start */
-            --t1-text: #F87171;
-            --t1-shadow: rgba(255, 154, 158, 0.25);
-            --t2-color: #A1C4FD;
-            /* Blue Gradient Start */
-            --t2-text: #60A5FA;
-            --t2-shadow: rgba(161, 196, 253, 0.25);
+            --t1-color: #A1C4FD;
+            --t1-text: #60A5FA;
+            --t1-shadow: rgba(161, 196, 253, 0.25);
+            --t2-color: #FF9A9E;
+            --t2-text: #F87171;
+            --t2-shadow: rgba(255, 154, 158, 0.25);
             --border-color: #E2E8F0;
             --overlay-bg: rgba(255, 255, 255, 0.75);
             --app-bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
@@ -48,12 +46,12 @@
             /* Negro absoluto */
             --card-border: #151515;
             /* Borde ultra sutil para diferenciar sin brillo */
-            --t1-color: #FC8181;
-            --t1-text: #FEB2B2;
-            --t1-shadow: rgba(252, 129, 129, 0.15);
-            --t2-color: #63B3ED;
-            --t2-text: #90CDF4;
-            --t2-shadow: rgba(99, 179, 237, 0.15);
+            --t1-color: #A1C4FD;
+            --t1-text: #60A5FA;
+            --t1-shadow: rgba(161, 196, 253, 0.25);
+            --t2-color: #FF9A9E;
+            --t2-text: #F87171;
+            --t2-shadow: rgba(255, 154, 158, 0.25);
             --border-color: #151515;
             --overlay-bg: rgba(0, 0, 0, 0.95);
             --app-bg-gradient: none;
@@ -336,7 +334,7 @@
                 <div class="flex flex-col justify-center">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tighter leading-none -mb-0.5">Truco</h1>
                     <p class="text-[9px] sm:text-[10px] text-muted font-black tracking-widest uppercase ml-0.5 mt-0.5">
-                        Anotador Pro
+                        Anotador
                     </p>
                 </div>
             </div>
@@ -451,6 +449,7 @@
             <select id="maxPoints" onchange="changeMaxPoints()"
                 class="bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--text-main)] rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3.5 font-bold focus:outline-none appearance-none cursor-pointer flex-1 text-center shadow-sm backdrop-blur-md text-sm sm:text-base">
                 <option value="30">Jugar a 30 Puntos</option>
+                <option value="18">Jugar a 18 Puntos</option>
                 <option value="15">Jugar a 15 Puntos</option>
             </select>
 
