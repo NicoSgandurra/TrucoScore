@@ -1,6 +1,6 @@
 {
-  "name": "Truco Anotador Pro",
-  "short_name": "Truco Pro",
+  "name": "Anotador Truco Pro",
+  "short_name": "Truco",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#FAFAFA",
