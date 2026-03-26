@@ -66,6 +66,25 @@
             transition: background 0.6s ease, color 0.6s ease;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .safe-area-padding {
+            padding-top: max(env(safe-area-inset-top), 0.5rem);
+            padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+            padding-left: max(env(safe-area-inset-left), 0.5rem);
+            padding-right: max(env(safe-area-inset-right), 0.5rem);
+        }
+        @media (min-width: 640px) {
+            .safe-area-padding {
+                padding-top: max(env(safe-area-inset-top), 1rem);
+                padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+                padding-left: max(env(safe-area-inset-left), 1rem);
+                padding-right: max(env(safe-area-inset-right), 1rem);
+            }
         }
 
         /* Glassmorphism Cards */
@@ -77,7 +96,8 @@
             border-radius: 2.5rem;
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, background 0.6s ease;
             user-select: none;
-            touch-action: pan-y;
+            -webkit-user-select: none;
+            touch-action: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -122,6 +142,8 @@
             border-bottom: 2px solid transparent;
             transition: border-bottom 0.3s;
             cursor: text;
+            user-select: text;
+            -webkit-user-select: text;
         }
 
         .team-input:focus {
@@ -259,7 +281,7 @@
     </style>
 </head>
 
-<body class="h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-center p-2 sm:p-4"
+<body class="h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-center safe-area-padding"
     oncontextmenu="return false;">
 
     <div class="max-w-md w-full h-full flex flex-col gap-2.5 sm:gap-4 relative py-1 justify-between">
